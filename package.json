@@ -1,6 +1,6 @@
 {
-  "name": "markdown-to-sanity",
-  "version": "0.0.1",
+  "name": "remark-to-sanity",
+  "version": "0.0.2",
   "description": "Migrate a folder of markdown files to Sanity",
   "main": "src/migrateFiles.js",
   "scripts": {
@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "bin": {
-    "remark-to-markdown": "./bin/remark-to-markdown.js"
+    "remark-to-sanity": "./bin/remark-to-markdown.js"
   },
   "devDependencies": {
     "eslint": "^5.10.0",
