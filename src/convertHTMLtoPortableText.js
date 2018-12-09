@@ -9,6 +9,7 @@ const blockContentType = defaultSchema.get('blogPost').fields.find(field => fiel
 
 
 function convertHTMLtoPortableText(HTMLDoc) {
+  console.log(HTMLDoc)
   const rules = [
     {
       // Special case for code blocks (wrapped in pre and code tag)

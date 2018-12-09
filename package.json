@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@sanity/block-tools": "^0.137.0-realtime-block-editor.372",
-    "@sanity/schema": "^0.136.2",
+    "@sanity/schema": "^0.137.0-realtime-block-editor.372",
     "glob": "^7.1.3",
     "globby": "^8.0.1",
     "jsdom": "^13.0.0",
