@@ -152,3 +152,4 @@ storybook-static
 sanity/dist
 
 test/tmp/*.mp4.vscode
+.ndjson
