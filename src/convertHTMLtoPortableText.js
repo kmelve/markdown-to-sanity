@@ -8,7 +8,7 @@ const blockContentType = defaultSchema.get('blogPost').fields.find(field => fiel
   .type
 
 
-async function convertHTMLtoPortableText(HTMLDoc) {
+function convertHTMLtoPortableText(HTMLDoc) {
   const rules = [
     {
       // Special case for code blocks (wrapped in pre and code tag)
@@ -31,10 +31,11 @@ async function convertHTMLtoPortableText(HTMLDoc) {
     }
   ]
 
-  const portableText = blockTools.htmlToBlocks(HTMLDoc, blockContentType, {
+  return blockTools.htmlToBlocks(HTMLDoc, blockContentType, {
     rules,
     parseHtml: html => new JSDOM(html).window.document
   })
+
 }
 
 module.exports = convertHTMLtoPortableText
