@@ -1,7 +1,7 @@
 const convertHTMLtoPortableText = require('./convertHTMLtoPortableText')
 
-function convertToSanityDocument({data, contents}) {
-  const { title, date, spoiler } = data.frontmatter
+function convertToSanityDocument({data = {}, contents}) {
+  const { title, date, spoiler } = data.frontmatter || {}
   const portableText = convertHTMLtoPortableText(contents)
 
   const doc = {

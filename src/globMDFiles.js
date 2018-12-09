@@ -1,6 +1,6 @@
-const globby = require('globby');
+const globby = require('globby')
 
-async function globMDFiles(path) {
+async function globMDFiles (path) {
   const options = {
     cwd: path
   }

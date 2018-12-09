@@ -1,25 +1,26 @@
 const blockTools = require('@sanity/block-tools').default
 const jsdom = require('jsdom')
-const {JSDOM} = jsdom
+const { JSDOM } = jsdom
 
 const defaultSchema = require('./defaultSchema')
 
-const blockContentType = defaultSchema.get('blogPost').fields.find(field => field.name === 'body')
-  .type
+const blockContentType = defaultSchema
+  .get('blogPost')
+  .fields.find(field => field.name === 'body').type
 
-
-function convertHTMLtoPortableText(HTMLDoc) {
-  console.log(HTMLDoc)
+function convertHTMLtoPortableText (HTMLDoc) {
   const rules = [
     {
       // Special case for code blocks (wrapped in pre and code tag)
-      deserialize(el, next, block) {
+      deserialize (el, next, block) {
         if (el.tagName.toLowerCase() !== 'pre') {
           return undefined
         }
         const code = el.children[0]
         const childNodes =
-          code && code.tagName.toLowerCase() === 'code' ? code.childNodes : el.childNodes
+          code && code.tagName.toLowerCase() === 'code'
+            ? code.childNodes
+            : el.childNodes
         let text = ''
         childNodes.forEach(node => {
           text += node.textContent
@@ -36,7 +37,6 @@ function convertHTMLtoPortableText(HTMLDoc) {
     rules,
     parseHtml: html => new JSDOM(html).window.document
   })
-
 }
 
 module.exports = convertHTMLtoPortableText
