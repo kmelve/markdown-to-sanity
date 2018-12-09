@@ -4,9 +4,10 @@ const fs = require('fs')
 function writeToFile ({ filename, sanityDocuments, outputPath }) {
   const path = `${outputPath}/${filename.split('.ndjson')[0]}`
 
-  const preparedDocuments = sanityDocuments.map(
-    doc => `${JSON.stringify(doc)}\n`
-  )
+  const preparedDocuments = sanityDocuments.reduce(
+    (acc, doc) => `${acc  }${JSON.stringify(doc)}\n`
+  , '')
+
   return fs.writeFile(`${path}.ndjson`, preparedDocuments, (err, data) => {
     if (err) {
       throw new Error(err)
