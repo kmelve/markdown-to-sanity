@@ -1,5 +1,6 @@
 const inquirer = require('inquirer')
 const { PathPrompt } = require('inquirer-path')
+const writeToFile = require('../src/writeToFile')
 inquirer.prompt.registerPrompt('path', PathPrompt)
 
 const migrateFiles = require('../src/migrateFiles')
@@ -28,7 +29,8 @@ async function run () {
     }
   ])
   const { inputPath, filename, outputPath } = answers
-  migrateFiles(inputPath, filename, outputPath)
+  const sanityDocuments = await migrateFiles(inputPath, filename, outputPath)
+  writeToFile({ filename, sanityDocuments, outputPath })
 }
 
 run()
