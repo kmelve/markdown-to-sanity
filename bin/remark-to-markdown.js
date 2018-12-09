@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const inquirer = require('inquirer')
 const { PathPrompt } = require('inquirer-path')
 const writeToFile = require('../src/writeToFile')

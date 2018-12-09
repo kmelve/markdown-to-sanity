@@ -1,14 +1,17 @@
 {
   "name": "markdown-to-sanity",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Migrate a folder of markdown files to Sanity",
+  "main": "src/migrateFiles.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bin": {
+    "remark-to-markdown": "./bin/remark-to-markdown.js"
+  },
   "devDependencies": {
     "eslint": "^5.10.0",
     "eslint-config-prettier": "^3.3.0",
