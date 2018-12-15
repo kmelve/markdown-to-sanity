@@ -6,13 +6,13 @@ function convertToSanityDocument({data = {}, contents}) {
 
   const doc = {
     _type: 'post',
-    date: new Date(date).toUTCString(),
+    _createdAt: new Date(date).toUTCString(),
     publishedAt: new Date(date).toUTCString(),
     title,
     spoiler,
     body: portableText
   }
-  return doc/* .filter(block => block._type !== "block") */
+  return doc
 }
 
 module.exports = convertToSanityDocument
