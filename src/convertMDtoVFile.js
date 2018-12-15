@@ -6,13 +6,13 @@ const html = require('remark-html')
 const yaml = require('yaml').parse
 
 async function convertMDtoVFile (markdownContent) {
-  const HTML = await unified()
+  const VFile = await unified()
     .use(markdown)
     .use(frontmatter)
     .use(extract, { name: 'frontmatter', yaml: yaml })
     .use(html)
     .process(markdownContent)
-  return HTML
+  return VFile
 }
 
 module.exports = convertMDtoVFile
