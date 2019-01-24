@@ -1,15 +1,14 @@
 const convertHTMLtoPortableText = require('./convertHTMLtoPortableText')
-
+const {format} = require('date-fns')
 function convertToSanityDocument({data = {}, contents}) {
-  const { title, date, spoiler } = data.frontmatter || {}
+  const { title, date } = data.frontmatter || {}
   const portableText = convertHTMLtoPortableText(contents)
 
   const doc = {
     _type: 'post',
-    _createdAt: new Date(date).toUTCString(),
-    publishedAt: new Date(date).toUTCString(),
+    _createdAt: format(new Date(date)),
+    publishedAt: format(new Date(date)),
     title,
-    spoiler,
     body: portableText
   }
   return doc

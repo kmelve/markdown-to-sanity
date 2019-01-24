@@ -46,10 +46,10 @@ function convertHTMLtoPortableText (HTMLDoc) {
    * to give block-tools JSDOM in order to
    * parse the HTML DOM elements
    */
-  return blockTools.htmlToBlocks(HTMLDoc, blockContentType, {
+  return HTMLDoc ? blockTools.htmlToBlocks(HTMLDoc, blockContentType, {
     rules,
     parseHtml: html => new JSDOM(html).window.document
-  })
+  }) : []
 }
 
 module.exports = convertHTMLtoPortableText
