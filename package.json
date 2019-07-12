@@ -2,7 +2,7 @@
   "name": "markdown-to-sanity",
   "version": "0.0.6",
   "description": "Migrate a folder of markdown files to Sanity",
-  "main": "src/migrateFiles.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "eslint .",
     "start": "node ./bin"
