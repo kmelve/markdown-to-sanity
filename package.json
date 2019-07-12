@@ -1,6 +1,6 @@
 {
   "name": "markdown-to-sanity",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Migrate a folder of markdown files to Sanity",
   "main": "src/index.js",
   "scripts": {
