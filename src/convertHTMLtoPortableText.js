@@ -1,6 +1,7 @@
 const blockTools = require('@sanity/block-tools').default
 const jsdom = require('jsdom')
 const { JSDOM } = jsdom
+const HTMLpattern = /<[a-z][\s\S]*>/
 
 /**
  *  block tools needs a schema definition to now what
@@ -12,6 +13,9 @@ const blockContentType = defaultSchema
   .fields.find(field => field.name === 'body').type
 
 function convertHTMLtoPortableText (HTMLDoc) {
+  if (!(HTMLpattern.test(HTMLDoc))) {
+    return []
+  }
   const rules = [
     {
       // Special case for code blocks (wrapped in pre and code tag)
@@ -46,10 +50,10 @@ function convertHTMLtoPortableText (HTMLDoc) {
    * to give block-tools JSDOM in order to
    * parse the HTML DOM elements
    */
-  return HTMLDoc ? blockTools.htmlToBlocks(HTMLDoc, blockContentType, {
+  return blockTools.htmlToBlocks(HTMLDoc, blockContentType, {
     rules,
     parseHtml: html => new JSDOM(html).window.document
-  }) : []
+  })
 }
 
 module.exports = convertHTMLtoPortableText

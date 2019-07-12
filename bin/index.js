@@ -2,9 +2,10 @@
 
 const inquirer = require('inquirer')
 const { PathPrompt } = require('inquirer-path')
-const writeToFile = require('../src/writeToFile')
+inquirer.registerPrompt('fuzzypath', require('inquirer-fuzzy-path'))
 inquirer.prompt.registerPrompt('path', PathPrompt)
 
+const writeToFile = require('../src/writeToFile')
 const migrateFiles = require('../src/migrateFiles')
 
 async function run () {
@@ -14,7 +15,8 @@ async function run () {
       type: 'path',
       name: 'inputPath',
       default: process.cwd(),
-      message: 'The absolute path to your folder with markdown files'
+      message: 'The absolute path to your folder with markdown files',
+      excludePath: nodePath => nodePath.startsWith('node_modules'),
     },
     {
       type: 'string',
