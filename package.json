@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "bin": {
-    "markdown-to-sanity": "./bin/markdown-to-markdown.js"
+    "markdown-to-sanity": "./bin/index.js"
   },
   "devDependencies": {
     "eslint": "^6.0.1",
