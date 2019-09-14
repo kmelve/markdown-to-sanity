@@ -17,7 +17,7 @@ module.exports = Schema.compile({
           name: 'body',
           type: 'array',
           of: [
-            {type: 'block'},
+            { type: 'block' },
             {
               name: 'code',
               type: 'object',
@@ -26,7 +26,7 @@ module.exports = Schema.compile({
                 {
                   title: 'Code',
                   name: 'code',
-                  type: 'text'
+                  type: 'code'
                 },
                 {
                   name: 'language',
