@@ -12,14 +12,14 @@ const blockContentType = defaultSchema
   .get('blogPost')
   .fields.find(field => field.name === 'body').type
 
-function convertHTMLtoPortableText (HTMLDoc) {
+function convertHTMLtoPortableText(HTMLDoc) {
   if (!(HTMLpattern.test(HTMLDoc))) {
     return []
   }
   const rules = [
     {
       // Special case for code blocks (wrapped in pre and code tag)
-      deserialize (el, next, block) {
+      deserialize(el, next, block) {
         if (el.tagName.toLowerCase() !== 'pre') {
           return undefined
         }
@@ -42,6 +42,38 @@ function convertHTMLtoPortableText (HTMLDoc) {
           _type: 'code',
           text: text
         })
+      },
+      deserialize(el, next, block) {
+        if (el.tagName === 'IMG') {
+          return {
+            _type: 'img',
+            asset: {
+              src: `${el
+                .getAttribute('src')
+                .replace(/^\/\//, 'https://')}`,
+              alt: `${el.getAttribute('alt')}`
+            }
+          }
+        }
+
+        if (
+          el.tagName.toLowerCase() === 'p' &&
+          el.childNodes.length === 1 &&
+          el.childNodes.tagName &&
+          el.childNodes[0].tagName.toLowerCase() === 'img'
+        ) {
+          return {
+            _type: 'img',
+            asset: {
+              src: `${el
+                .getAttribute('src')
+                .replace(/^\/\//, 'https://')}`,
+              alt: `${el.getAttribute('alt')}`
+            }
+          }
+        }
+        // Only convert block-level images, for now
+        return undefined
       }
     }
   ]
