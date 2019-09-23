@@ -23,24 +23,24 @@ function convertHTMLtoPortableText (HTMLDoc) {
         if (el.tagName.toLowerCase() !== 'pre') {
           return undefined
         }
-        const code = el.children[0]
-        const childNodes =
-          code && code.tagName.toLowerCase() === 'code'
-            ? code.childNodes
+        const codeElement = el.children[0]
+        const codeElementNodes =
+        codeElement && codeElement.tagName.toLowerCase() === 'code'
+            ? codeElement.childNodes
             : el.childNodes
-        let text = ''
-        childNodes.forEach(node => {
-          text += node.textContent
+        let code = ''
+        codeElementNodes.forEach(node => {
+          code += node.textContent
         })
-        /**
-         * use `block()` to add it to the
-         * root array, instead of as
-         * children of a block
-         *  */
 
+        let language = 'text';
+        if(codeElement.className){
+          language = codeElement.className.split("-")[1];
+        }
         return block({
           _type: 'code',
-          text: text
+          code: code,
+          language: language
         })
       }
     },
