@@ -18,6 +18,30 @@ function convertHTMLtoPortableText (HTMLDoc) {
   }
   const rules = [
     {
+      deserialize(el, next, block) {
+        if (el.tagName.toLowerCase() !== "figure") {
+          return undefined;
+        }
+        const img = Array.from(el.children).find(
+          child => child.tagName.toLowerCase() === "img"
+        );
+        const caption = Array.from(el.children).find(
+          child => child.tagName.toLowerCase() === "figcaption"
+        );
+
+        return block({
+          _type: "figure",
+          image: {
+            // using the format for importing assets via the CLI
+            // https://www.sanity.io/docs/data-store/importing-data#import-using-the-cli
+            _sanityAsset: `image@${img.getAttribute("src")}`
+          },
+          alt: img.getAttribute("alt"),
+          caption: caption.textContent
+        });
+      }
+    },
+    {
       // Special case for code blocks (wrapped in pre and code tag)
       deserialize (el, next, block) {
         if (el.tagName.toLowerCase() !== 'pre') {
