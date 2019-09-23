@@ -12,14 +12,14 @@ const blockContentType = defaultSchema
   .get('blogPost')
   .fields.find(field => field.name === 'body').type
 
-function convertHTMLtoPortableText(HTMLDoc) {
-  if (!(HTMLpattern.test(HTMLDoc))) {
+function convertHTMLtoPortableText (HTMLDoc) {
+  if (!HTMLpattern.test(HTMLDoc)) {
     return []
   }
   const rules = [
     {
       // Special case for code blocks (wrapped in pre and code tag)
-      deserialize(el, next, block) {
+      deserialize (el, next, block) {
         if (el.tagName.toLowerCase() !== 'pre') {
           return undefined
         }
@@ -42,15 +42,15 @@ function convertHTMLtoPortableText(HTMLDoc) {
           _type: 'code',
           text: text
         })
-      },
-      deserialize(el, next, block) {
+      }
+    },
+    {
+      deserialize (el, next, block) {
         if (el.tagName === 'IMG') {
           return {
             _type: 'img',
             asset: {
-              src: `${el
-                .getAttribute('src')
-                .replace(/^\/\//, 'https://')}`,
+              src: `${el.getAttribute('src').replace(/^\/\//, 'https://')}`,
               alt: `${el.getAttribute('alt')}`
             }
           }
@@ -65,9 +65,7 @@ function convertHTMLtoPortableText(HTMLDoc) {
           return {
             _type: 'img',
             asset: {
-              src: `${el
-                .getAttribute('src')
-                .replace(/^\/\//, 'https://')}`,
+              src: `${el.getAttribute('src').replace(/^\/\//, 'https://')}`,
               alt: `${el.getAttribute('alt')}`
             }
           }
@@ -87,5 +85,4 @@ function convertHTMLtoPortableText(HTMLDoc) {
     parseHtml: html => new JSDOM(html).window.document
   })
 }
-
 module.exports = convertHTMLtoPortableText
