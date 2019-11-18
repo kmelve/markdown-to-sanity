@@ -45,6 +45,23 @@ module.exports = Schema.compile({
                   ]
                 }
               ]
+            },
+            {
+              name: 'image',
+              type: 'object',
+              title: 'image',
+              fields: [
+                {
+                  title: 'src',
+                  name: 'src',
+                  type: 'string'
+                },
+                {
+                  title: 'alt',
+                  name: 'alt',
+                  type: 'string'
+                }
+              ]
             }
           ]
         }
