@@ -13,7 +13,7 @@ const blockContentType = defaultSchema
   .fields.find(field => field.name === 'body').type
 
 function convertHTMLtoPortableText (HTMLDoc) {
-  if (!(HTMLpattern.test(HTMLDoc))) {
+  if (!HTMLpattern.test(HTMLDoc)) {
     return []
   }
   const rules = [
@@ -47,25 +47,55 @@ function convertHTMLtoPortableText (HTMLDoc) {
         if (el.tagName.toLowerCase() !== 'pre') {
           return undefined
         }
-        const code = el.children[0]
-        const childNodes =
-          code && code.tagName.toLowerCase() === 'code'
-            ? code.childNodes
+        const codeElement = el.children[0]
+        const codeElementNodes =
+        codeElement && codeElement.tagName.toLowerCase() === 'code'
+            ? codeElement.childNodes
             : el.childNodes
-        let text = ''
-        childNodes.forEach(node => {
-          text += node.textContent
+        let code = ''
+        codeElementNodes.forEach(node => {
+          code += node.textContent
         })
-        /**
-         * use `block()` to add it to the
-         * root array, instead of as
-         * children of a block
-         *  */
 
+        let language = 'text';
+        if(codeElement.className){
+          language = codeElement.className.split("-")[1];
+        }
         return block({
           _type: 'code',
-          text: text
+          code: code,
+          language: language
         })
+      }
+    },
+    {
+      deserialize (el, next, block) {
+        if (el.tagName === 'IMG') {
+          return {
+            _type: 'img',
+            asset: {
+              src: `${el.getAttribute('src').replace(/^\/\//, 'https://')}`,
+              alt: `${el.getAttribute('alt')}`
+            }
+          }
+        }
+
+        if (
+          el.tagName.toLowerCase() === 'p' &&
+          el.childNodes.length === 1 &&
+          el.childNodes.tagName &&
+          el.childNodes[0].tagName.toLowerCase() === 'img'
+        ) {
+          return {
+            _type: 'img',
+            asset: {
+              src: `${el.getAttribute('src').replace(/^\/\//, 'https://')}`,
+              alt: `${el.getAttribute('alt')}`
+            }
+          }
+        }
+        // Only convert block-level images, for now
+        return undefined
       }
     }
   ]
@@ -79,5 +109,4 @@ function convertHTMLtoPortableText (HTMLDoc) {
     parseHtml: html => new JSDOM(html).window.document
   })
 }
-
 module.exports = convertHTMLtoPortableText
