@@ -37,7 +37,7 @@ function convertHTMLtoPortableText (HTMLDoc) {
             _sanityAsset: `image@${img.getAttribute("src")}`
           },
           alt: img.getAttribute("alt"),
-          caption: caption.textContent
+          caption: caption ? caption.textContent : ''
         });
       }
     },
